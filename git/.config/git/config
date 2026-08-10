@@ -1,0 +1,10 @@
+[user]
+	email = zburns1980@gmail.com
+	name = Brent
+[core]
+	editor = nvim
+[push]
+	default = simple
+	autoSetupRemote = true
+[init]
+	defaultBranch = master

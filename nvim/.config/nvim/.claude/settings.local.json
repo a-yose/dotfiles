@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/home/hulkhogan/.local/share/nvim/lazy/nvim-lspconfig/lua/lspconfig/**)",
+      "Read(/home/hulkhogan/.local/share/nvim/lazy/nvim-lspconfig/lua/lspconfig/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
