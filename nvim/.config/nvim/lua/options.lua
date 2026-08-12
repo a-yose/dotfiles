@@ -87,8 +87,6 @@ vim.o.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.o.cursorline = true
--- Cursor is vertical bar on insert mode
-vim.opt.guicursor = 'n-v-c:block,i-ci-ve:ver25'
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 4

@@ -75,6 +75,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(aliases git)
+plugins=(mise)
 # plugins=($plugins spaceship-ember)
 
 source $ZSH/oh-my-zsh.sh
@@ -99,6 +100,13 @@ export VISUAL="nvim"
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
+# custom functions
+h() {
+  [[ $# -eq 0 ]] && { echo "usage: h <command> [args...]" >&2; return 1; }
+  command -v bat >/dev/null || { "$@" --help 2>&1 | ${PAGER:-less}; return; }
+  "$@" --help 2>&1 | bat --plain --language=help
+}
+
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
 # users are encouraged to define aliases within a top-level file in
@@ -118,3 +126,4 @@ export NVM_DIR="$HOME/.nvm"
 export PGDATABASE_URL="postgres://postgres:postgres@localhost:54322/postgres"
 [ -f "$HOME/.deno/env" ] && . "$HOME/.deno/env"
 [ -x /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+eval "$(~/.local/bin/mise activate zsh)"
