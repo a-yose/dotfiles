@@ -1,0 +1,6 @@
+export BASH_CONFIG_PATH="$HOME/.config/bash"
+source "$BASH_CONFIG_PATH/envs.sh"
+source "$BASH_CONFIG_PATH/shell.sh"
+source "$BASH_CONFIG_PATH/aliases.sh"
+source "$BASH_CONFIG_PATH/init.sh"
+source "$BASH_CONFIG_PATH/functions.sh"
