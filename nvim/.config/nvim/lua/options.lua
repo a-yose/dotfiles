@@ -77,7 +77,7 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
-vim.opt.shell = '/bin/zsh'
+-- vim.opt.shell = '/bin/zsh'
 
 -- Use the Postgres dialect for the legacy SQL syntax engine
 vim.g.sql_type_default = 'pgsql'
