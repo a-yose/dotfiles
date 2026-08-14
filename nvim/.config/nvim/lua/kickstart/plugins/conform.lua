@@ -54,6 +54,8 @@ return {
         json = { 'prettierd', 'prettier', stop_after_first = true },
         yaml = { 'prettierd' },
         markdown = { 'prettierd', 'prettier' },
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
       },
       formatters = {
         -- deno fmt discovers its config (the `fmt` block in deno.json) by
@@ -66,6 +68,15 @@ return {
           cwd = function(_, ctx)
             return vim.fs.root(ctx.buf, { 'deno.json', 'deno.jsonc' })
           end,
+        },
+        -- shfmt defaults to tabs; these match the 2-space style used elsewhere
+        -- in this config. -ci indents switch cases, -bn puts binary operators
+        -- (&&, |) at the start of the wrapped line.
+        -- NOTE: passing any formatting flag makes shfmt ignore .editorconfig
+        -- entirely. Drop prepend_args if you'd rather let per-project
+        -- .editorconfig files decide.
+        shfmt = {
+          prepend_args = { '-i', '2', '-ci', '-bn' },
         },
       },
     },
