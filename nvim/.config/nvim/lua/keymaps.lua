@@ -1,15 +1,7 @@
-local opts = { noremap = true, silent = true }
-local function mergeTable(t1, t2)
-  local result = {}
-
-  for k, v in pairs(t1) do
-    result[k] = v
-  end
-  for k, v in pairs(t2) do
-    result[k] = v
-  end
-
-  return result
+-- `noremap` is already the default for vim.keymap.set, so `silent` is the only
+-- payload these mappings need beyond their description.
+local function silent(desc)
+  return { silent = true, desc = desc }
 end
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -24,20 +16,20 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('n', '<C-a>', 'gg<S-v>G', { desc = 'Select all' })
 
 -- Jumplist
-vim.keymap.set('n', '<leader>J', ':jump<CR>', mergeTable(opts, { desc = 'Open jumplist' }))
+vim.keymap.set('n', '<leader>J', ':jumps<CR>', silent 'Open jumplist')
 
 --Open new tab
-vim.keymap.set('n', 'tn', ':tabnew<CR>', mergeTable(opts, { desc = 'Open a new tab ' }))
+vim.keymap.set('n', 'tn', ':tabnew<CR>', silent 'Open a new tab')
 
 -- Split window
-vim.keymap.set('n', 'ss', ':split<CR>', mergeTable(opts, { desc = 'Split current window horizontally' }))
-vim.keymap.set('n', 'sv', ':vsplit<CR>', mergeTable(opts, { desc = 'Split current window vertically' }))
+vim.keymap.set('n', 'ss', ':split<CR>', silent 'Split current window horizontally')
+vim.keymap.set('n', 'sv', ':vsplit<CR>', silent 'Split current window vertically')
 
 -- Move window
-vim.keymap.set('n', 'sh', '<C-w>H', mergeTable(opts, { desc = 'Move current window to far left' }))
-vim.keymap.set('n', 'sl', '<C-w>L', mergeTable(opts, { desc = 'Move current window to far right' }))
-vim.keymap.set('n', 'sj', '<C-w>J', mergeTable(opts, { desc = 'Move current window to far bottom' }))
-vim.keymap.set('n', 'sk', '<C-w>K', mergeTable(opts, { desc = 'Move current window to far top' }))
+vim.keymap.set('n', 'sh', '<C-w>H', silent 'Move current window to far left')
+vim.keymap.set('n', 'sl', '<C-w>L', silent 'Move current window to far right')
+vim.keymap.set('n', 'sj', '<C-w>J', silent 'Move current window to far bottom')
+vim.keymap.set('n', 'sk', '<C-w>K', silent 'Move current window to far top')
 
 -- Move buffer
 vim.keymap.set('n', '<leader>obm', function()
@@ -63,7 +55,7 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move ocus to the left window' })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })

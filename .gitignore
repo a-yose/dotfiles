@@ -1,0 +1,10 @@
+# Environment files -- may contain credentials (e.g. database URLs read by
+# nvim/.config/nvim/lua/custom/plugins/database.lua)
+.env
+.env.*
+!.env.example
+
+# Editor / OS noise
+*.swp
+*.swo
+.DS_Store

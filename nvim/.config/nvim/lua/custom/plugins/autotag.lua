@@ -1,21 +1,21 @@
+-- Auto close/rename HTML & JSX tags.
+-- Neovim 0.12 has a native equivalent (vim.lsp.linked_editing_range) but it
+-- depends on the server implementing textDocument/linkedEditingRange, which
+-- ts_ls does not do reliably for TSX -- hence the plugin.
 return {
   'windwp/nvim-ts-autotag',
-  config = function()
-    require('nvim-ts-autotag').setup {
-      opts = {
-        -- Defaults
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
-        enable_close_on_slash = false, -- Auto close on trailing </
-      },
-      -- Also override individual filetype configs, these take priority.
-      -- Empty by default, useful if one of the "opts" global settings
-      -- doesn't work well in a specific filetype
-      -- per_filetype = {
-      --   ['html'] = {
-      --     enable_close = false,
-      --   },
-      -- },
-    }
-  end,
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  ft = {
+    'html',
+    'xml',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'svelte',
+    'vue',
+    'markdown',
+  },
+  -- All settings are already the plugin defaults.
+  opts = {},
 }

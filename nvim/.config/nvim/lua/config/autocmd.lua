@@ -1,6 +1,9 @@
 vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave', 'InsertLeave' }, {
+  group = vim.api.nvim_create_augroup('auto-save', { clear = true }),
   callback = function()
-    if vim.bo.modified and vim.bo.filetype ~= 'nofile' then
+    -- `nofile` is a 'buftype', not a 'filetype' -- guarding on filetype here
+    -- never matched, so scratch/plugin buffers were included in the `wall`.
+    if vim.bo.modified and vim.bo.buftype == '' then
       vim.cmd 'silent! wall'
     end
   end,

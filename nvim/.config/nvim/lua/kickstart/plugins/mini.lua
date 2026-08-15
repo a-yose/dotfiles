@@ -18,41 +18,15 @@ return {
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup {
         mappings = {
-          --   add = 'ys',
-          --   delete = 'ds',
-          --   find = '',
-          --   find_left = '',
+          -- 'sh' is taken by the window-move mapping in lua/keymaps.lua
           highlight = 'sH',
-          --   replace = 'cs',
-          --   update_n_lines = '',
-          --
-          --   -- Add this only if you don't want to use extended mappings
-          --   suffix_last = '',
-          --   suffix_next = '',
         },
-        -- search_method = 'cover_or_next',
       }
 
       require('mini.sessions').setup {
         autoread = false,
         autowrite = true,
         file = 'SessionLocal.vim',
-        -- hooks = {
-        --   pre = {
-        --     write = function()
-        --       for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-        --         local name = vim.api.nvim_buf_get_name(bufnr)
-        --         if name ~= '' then
-        --           -- If there is *no* extension at end of filename…
-        --           if not name:match '%.%w+$' then
-        --             -- delete it so mksession won't save it
-        --             vim.api.nvim_buf_delete(bufnr, { force = true })
-        --           end
-        --         end
-        --       end
-        --     end,
-        --   },
-        -- },
       }
 
       vim.keymap.set('n', '<leader>ws', function()
@@ -66,48 +40,26 @@ return {
       vim.keymap.set('n', '<leader>wW', function()
         local name = vim.fn.input 'Session name: '
         MiniSessions.write(name)
-      end, {
-        desc = 'Write Session Name',
-      })
+      end, { desc = 'Write Session Name' })
 
       vim.keymap.set('n', '<leader>ww', function()
         MiniSessions.write()
-      end, {
-        desc = 'Write Local Session',
-      })
-
-      vim.keymap.set('n', '<leader>wg', function()
-        print(vim.inspect(MiniSessions.detected))
-      end, { desc = 'Get Sessions Table' })
+      end, { desc = 'Write Local Session' })
 
       vim.keymap.set('n', '<leader>wD', function()
         local name = vim.fn.input 'Delete Session: '
         MiniSessions.delete(name)
-      end, {
-        desc = 'Delete Session by Name',
-      })
+      end, { desc = 'Delete Session by Name' })
 
       vim.keymap.set('n', '<leader>wL', function()
-        MiniSessions.get_latest()
-      end, { desc = 'Select Latest Session' })
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      -- local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      -- statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function()
-      --   return '%2l:%-2v'
-      -- end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
+        -- get_latest() only returns a name; it has to be read to be loaded.
+        local latest = MiniSessions.get_latest()
+        if latest then
+          MiniSessions.read(latest)
+        else
+          vim.notify('No sessions detected', vim.log.levels.WARN)
+        end
+      end, { desc = 'Load Latest Session' })
     end,
   },
 }
