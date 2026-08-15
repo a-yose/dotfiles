@@ -1,10 +1,18 @@
 return {
   'nvim-lualine/lualine.nvim',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    -- Neovim 0.12 exposes all in-flight progress (LSP, :checkhealth, ...) here.
+    -- `lsp_status` below only covers LSP, so this catches the rest -- and it is
+    -- what replaces the fidget.nvim spinner.
+    local function progress_status()
+      return vim.ui.progress_status and vim.ui.progress_status() or ''
+    end
+
     require('lualine').setup {
       options = {
-        globalstatus = true,
-        theme = 'dracula',
+        -- globalstatus is driven by `vim.o.laststatus = 3` in lua/options.lua
+        theme = 'auto',
         ignore_focus = { 'neo-tree', 'dbui' },
       },
       sections = {
@@ -23,12 +31,8 @@ return {
         },
         lualine_b = { { 'filetype' } },
         lualine_c = { { 'diagnostics', sources = { 'nvim_diagnostic' } } },
-        lualine_x = { { 'lsp_status' } },
+        lualine_x = { { 'lsp_status' }, { progress_status } },
       },
-      -- tabline = {
-      --   lualine_a = { { 'tabs', mode = 2, path = 1, tabs_color = { active = '#fff', inactive = '000' } } },
-      -- },
-      dependencies = { 'nvim-tree/nvim-web-devicons' },
     }
   end,
 }

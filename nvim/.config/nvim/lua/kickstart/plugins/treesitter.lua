@@ -39,11 +39,11 @@ return {
       }
       -- Filetypes that ALSO keep the legacy regex engine.
       -- Replaces `additional_vim_regex_highlighting`.
-      local keep_regex_syntax = { ruby = true, sql = true }
+      local keep_regex_syntax = { sql = true }
 
       -- Filetypes where treesitter indent is NOT used.
       -- Replaces `indent.disable`.
-      local no_ts_indent = { ruby = true }
+      local no_ts_indent = {}
 
       vim.api.nvim_create_autocmd('FileType', {
         group = vim.api.nvim_create_augroup('ts-attach', { clear = true }),
@@ -60,6 +60,12 @@ return {
           end
 
           vim.treesitter.start(ev.buf, lang)
+
+          -- Syntax-aware folding for buffers that have a parser. `vim.wo[0][0]`
+          -- scopes these window-local options to this buffer only, so buffers
+          -- without a parser keep the `foldmethod=indent` fallback from options.lua.
+          vim.wo[0][0].foldmethod = 'expr'
+          vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
           if keep_regex_syntax[ft] then
             vim.bo[ev.buf].syntax = 'ON'

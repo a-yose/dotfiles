@@ -7,12 +7,8 @@
 
 local check_version = function()
   local verstr = tostring(vim.version())
-  if not vim.version.ge then
-    vim.health.error(string.format("Neovim out of date: '%s'. Upgrade to latest stable or nightly", verstr))
-    return
-  end
-
-  if vim.version.ge(vim.version(), '0.10-dev') then
+  -- 0.11 is the floor: this config uses vim.lsp.config()/vim.lsp.enable().
+  if vim.version.ge(vim.version(), '0.11-dev') then
     vim.health.ok(string.format("Neovim version is: '%s'", verstr))
   else
     vim.health.error(string.format("Neovim out of date: '%s'. Upgrade to latest stable or nightly", verstr))
@@ -29,8 +25,6 @@ local check_external_reqs = function()
       vim.health.warn(string.format("Could not find executable: '%s'", exe))
     end
   end
-
-  return true
 end
 
 return {
@@ -43,8 +37,7 @@ return {
     Mason will give warnings for languages that are not installed.
     You do not need to install, unless you want to use those languages!]]
 
-    local uv = vim.uv or vim.loop
-    vim.health.info('System Information: ' .. vim.inspect(uv.os_uname()))
+    vim.health.info('System Information: ' .. vim.inspect(vim.uv.os_uname()))
 
     check_version()
     check_external_reqs()
