@@ -31,10 +31,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- A list runs sequentially; `stop_after_first` runs only the first available one.
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = function(bufnr)
           local path = vim.api.nvim_buf_get_name(bufnr)
@@ -53,7 +50,7 @@ return {
         end,
         json = { 'prettierd', 'prettier', stop_after_first = true },
         yaml = { 'prettierd' },
-        markdown = { 'prettierd', 'prettier' },
+        markdown = { 'prettierd', 'prettier', stop_after_first = true },
         sh = { 'shfmt' },
         bash = { 'shfmt' },
       },
