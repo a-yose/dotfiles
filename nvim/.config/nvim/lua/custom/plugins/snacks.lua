@@ -5,19 +5,12 @@ return {
   ---@type snacks.config
   opts = {
     bigfile = { enabled = true },
-    notifier = {
-      enabled = true,
-      timeout = 7000,
-    },
+    -- NOTE: notifications are owned by noice.nvim (see custom/plugins/ui.lua).
+    indent = { enabled = true },
     terminal = {},
     lazygit = {},
     gitbrowse = {},
     -- statuscolumn = {},
-    styles = {
-      notification = {
-        wo = { wrap = true },
-      },
-    },
     dashboard = {
       enabled = true,
       sections = {
@@ -44,7 +37,7 @@ return {
     },
   },
   keys = {
-    -- notifier
+    -- terminal
     {
       '<leader>tt',
       function()
@@ -52,20 +45,9 @@ return {
       end,
       desc = 'Toggle Terminal',
     },
-    {
-      '<leader>nu',
-      function()
-        Snacks.notifier.hide()
-      end,
-      desc = 'Dismiss All Notifications',
-    },
-    {
-      '<leader>nh',
-      function()
-        Snacks.notifier.show_history()
-      end,
-      desc = 'Notification History',
-    },
+    -- notifications (handled by noice.nvim)
+    { '<leader>nu', '<cmd>NoiceDismiss<cr>', desc = 'Dismiss All Notifications' },
+    { '<leader>nh', '<cmd>Noice history<cr>', desc = 'Notification History' },
     -- git
     {
       '<leader>gb',
