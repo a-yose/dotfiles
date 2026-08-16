@@ -88,4 +88,6 @@ vim.o.confirm = true
 vim.cmd.packadd 'nvim.undotree'
 vim.keymap.set('n', '<leader>u', '<Cmd>Undotree<CR>', { desc = 'Undo tree' })
 
+vim.cmd.packadd 'nvim.difftool'
+
 -- vim: ts=2 sts=2 sw=2 et
