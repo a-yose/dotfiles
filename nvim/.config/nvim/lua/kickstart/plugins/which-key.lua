@@ -12,6 +12,29 @@ return {
         keys = {},
       },
 
+      -- Cluster mappings whose desc is prefixed with a scope ("Local:" /
+      -- "Project:" / "Global:") so they appear as blocks in the popup.
+      -- Everything else returns '', compares equal, and falls through to the
+      -- sorters below, so other menus keep their default order. Unprefixed
+      -- entries sort ahead of every block, since '' < '1'.
+      sort = {
+        'local',
+        'order',
+        'group',
+        function(item)
+          local desc = item.desc or ''
+          local scopes = { ['Local:'] = '1', ['Project:'] = '2', ['Global:'] = '3' }
+          for scope, rank in pairs(scopes) do
+            if desc:sub(1, #scope) == scope then
+              return rank .. desc
+            end
+          end
+          return ''
+        end,
+        'alphanum',
+        'mod',
+      },
+
       -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch' },
