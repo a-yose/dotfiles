@@ -1,16 +1,13 @@
 -- [[ Setting options ]]
 -- See `:help vim.o` -- for more options, see `:help option-list`
 --
--- NOTE: options that are already Neovim 0.12 defaults are deliberately not set
--- here (autoindent, wrap, completeopt=menu,popup, ...). Check with `nvim --clean`
--- before adding one back.
-
 vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 vim.o.number = true
 vim.o.relativenumber = true
+vim.o.autoindent = true
 vim.o.smartindent = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -18,7 +15,9 @@ vim.o.mouse = 'a'
 vim.o.showmode = false
 vim.o.textwidth = 80
 vim.o.linebreak = true
-
+vim.o.wrap = true
+-- prevents tab from being used for anything other than indentation
+vim.keymap.del('i', '<Tab>')
 -- Global statusline (lualine reads this rather than setting globalstatus itself)
 vim.o.laststatus = 3
 

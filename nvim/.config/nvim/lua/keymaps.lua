@@ -8,6 +8,11 @@ end
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', 'jj', '<Esc>')
+-- { '<leader>nu', '<cmd>NoiceDismiss<cr>', desc = 'Dismiss All Notifications' },
+-- { '<leader>nh', '<cmd>Noice history<cr>', desc = 'Notification History' },
+
+vim.keymap.set('n', '<leader>nd', '<cmd>NoiceDismiss<cr>', silent 'Dismiss All Notifications')
+vim.keymap.set('n', '<leader>nh', '<cmd>Noice history<cr>', silent 'Notification History')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })

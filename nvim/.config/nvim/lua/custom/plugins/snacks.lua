@@ -9,8 +9,8 @@ return {
     indent = { enabled = true },
     terminal = {},
     lazygit = {},
+    picker = { enable = true },
     gitbrowse = {},
-    -- statuscolumn = {},
     dashboard = {
       enabled = true,
       sections = {
@@ -45,9 +45,6 @@ return {
       end,
       desc = 'Toggle Terminal',
     },
-    -- notifications (handled by noice.nvim)
-    { '<leader>nu', '<cmd>NoiceDismiss<cr>', desc = 'Dismiss All Notifications' },
-    { '<leader>nh', '<cmd>Noice history<cr>', desc = 'Notification History' },
     -- git
     {
       '<leader>gb',

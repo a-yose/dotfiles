@@ -9,6 +9,9 @@ return {
       library = {
         -- Load luvit types when the `vim.uv` word is found
         { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        -- snacks.nvim sets the `Snacks` global at runtime; lazydev only pulls in
+        -- plugin sources on `require()`, so match the bare global instead.
+        { path = 'snacks.nvim', words = { 'Snacks' } },
       },
     },
   },

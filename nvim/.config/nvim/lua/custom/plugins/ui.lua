@@ -15,9 +15,12 @@ return {
       lsp_doc_border = true,
     },
     routes = {
+      -- Neovim's native `recording @q` message rides on msg_showmode, which
+      -- noice skips by default
       {
-        view = 'notify',
-        filter = { event = 'msg_showmode' },
+        view = 'virtualtext',
+        filter = { event = 'msg_showmode', find = 'recording' },
+        opts = { hl_group = 'DiagnosticVirtualTextWarn' },
       },
       {
         filter = {

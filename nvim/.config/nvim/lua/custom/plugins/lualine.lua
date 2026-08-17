@@ -9,6 +9,24 @@ return {
       return vim.ui.progress_status and vim.ui.progress_status() or ''
     end
 
+    local recording = {
+      function()
+        local reg = vim.fn.reg_recording()
+        return reg ~= '' and ('󰑊 recording @' .. reg) or ''
+      end,
+      color = { fg = '#ff9e64', gui = 'bold' },
+    }
+
+    -- lualine refreshes on CursorMoved/ModeChanged and a 1s timer, none of which
+    -- fire reliably the instant recording starts or stops.
+    vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+      group = vim.api.nvim_create_augroup('lualine-macro-indicator', { clear = true }),
+      desc = 'Refresh lualine so the macro indicator updates immediately',
+      callback = function()
+        require('lualine').refresh()
+      end,
+    })
+
     require('lualine').setup {
       options = {
         -- globalstatus is driven by `vim.o.laststatus = 3` in lua/options.lua
@@ -17,6 +35,9 @@ return {
       },
       sections = {
         lualine_c = { { 'buffers', mode = 4 } },
+        -- lualine_x's defaults are respecified so prepending `recording` doesn't
+        -- drop them.
+        lualine_x = { recording, 'encoding', 'fileformat', 'filetype' },
       },
       inactive_winbar = {
         lualine_a = {
