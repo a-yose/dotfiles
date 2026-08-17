@@ -23,11 +23,6 @@ return {
         },
       }
 
-      -- TODO: folds do not appear to survive a session round-trip. 'sessionoptions'
-      -- does include `folds`, so the first thing to check is that it lacks
-      -- `localoptions` -- window-local 'foldmethod'/'foldexpr' (set by ftplugins
-      -- and by nvim-treesitter) are therefore not saved, so a restored window
-      -- recomputes folds from whatever the defaults are.
       require('mini.sessions').setup {
         autoread = false,
         autowrite = true,
