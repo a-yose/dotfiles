@@ -43,7 +43,7 @@ return {
       end, { desc = 'Write Session Name' })
 
       vim.keymap.set('n', '<leader>ww', function()
-        MiniSessions.write()
+        MiniSessions.write(MiniSessions.config.file)
       end, { desc = 'Write Local Session' })
 
       vim.keymap.set('n', '<leader>wD', function()
