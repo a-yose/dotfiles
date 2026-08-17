@@ -1,0 +1,13 @@
+[settings]
+disable_backends = ["asdf"]
+
+[tools]
+bat = "latest"
+cargo-binstall = "latest"
+fd = "latest"
+gh = "latest"
+lazygit = "latest"
+rg = "latest"
+supabase = "latest"
+tealdeer = "latest"
+usage = "latest"

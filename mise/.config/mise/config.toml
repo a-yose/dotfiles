@@ -1,13 +1,10 @@
-[settings]
-disable_backends = ["asdf"]
-
 [tools]
-bat = "latest"
-cargo-binstall = "latest"
-fd = "latest"
+claude = "latest"
+codex = "latest"
 gh = "latest"
-lazygit = "latest"
-rg = "latest"
+node = "26.7.0"
+"npm:@fsouza/prettierd" = "0.29.0"
+prettier = "3.9.6"
+shellcheck = "latest"
+shfmt = "latest"
 supabase = "latest"
-tealdeer = "latest"
-usage = "latest"
