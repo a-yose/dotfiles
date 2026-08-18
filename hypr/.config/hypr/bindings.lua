@@ -27,3 +27,16 @@
 -- o.bind("SUPER + SHIFT + S", nil, "omarchy-capture-screenshot")
 -- o.bind("SUPER + H", nil, "voxtype record toggle")
 -- o.bind("SUPER + PERIOD", nil, "omarchy-shell shell toggle omarchy.emojis")
+
+hl.unbind("SUPER + SHIFT + C")
+o.bind("SUPER + SHIFT + C", "Claude cloud", "omarchy-launch-webapp https://claude.ai/new")
+hl.unbind("SUPER + ALT + SHIFT + S")
+o.bind(
+	"SUPER + ALT + SHIFT + S",
+	"Supabase",
+	"omarchy-launch-webapp http://127.0.0.1:54323/project/default/editor/20982?schema=public"
+)
+hl.unbind("SUPER + M")
+o.bind("SUPER + M", "Monitor Config", "ghostty -e nvim ~/dotfiles/hypr/.config/hypr/monitors.lua")
+hl.unbind("SUPER + ALT + N")
+o.bind("SUPER + ALT + N", "Edit Neovim Config", "cd ~/dotfiles/nvim/.config/nvim && ghostty -e nvim")
