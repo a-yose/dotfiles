@@ -6,3 +6,6 @@ auto_switch = false
 [ui]
 agent_panel_sort = "spaces"
 host_cursor = "native"
+
+[keys]
+prefix = "ctrl+space"
