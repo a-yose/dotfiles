@@ -1,9 +1,11 @@
 [tools]
+"aqua:modem-dev/hunk" = "latest"
 claude = "latest"
 codex = "latest"
 gh = "latest"
 node = "26.7.0"
 "npm:@fsouza/prettierd" = "0.29.0"
+opencode = "latest"
 prettier = "3.9.6"
 shellcheck = "latest"
 shfmt = "latest"
