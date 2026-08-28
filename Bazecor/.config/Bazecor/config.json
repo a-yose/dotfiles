@@ -617,7 +617,7 @@
 			"layers": [
 				{
 					"id": 0,
-					"name": "Home row mod"
+					"name": "Base"
 				},
 				{
 					"id": 1,
@@ -653,7 +653,7 @@
 				},
 				{
 					"id": 9,
-					"name": "L10"
+					"name": "Home Row Mod"
 				}
 			],
 			"macros": [
@@ -1016,6 +1016,17 @@
 					],
 					"name": "up",
 					"id": 16
+				},
+				{
+					"actions": [
+						42,
+						224,
+						1,
+						1,
+						1
+					],
+					"name": "bsctl",
+					"id": 17
 				}
 			],
 			"device": {
