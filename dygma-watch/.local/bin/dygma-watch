@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# Watches the Dygma backup dir and syncs the newest backup into the dotfiles repo
+# whenever Bazecor writes one. Run as a systemd user service (dygma-watch.service).
+#
+# --recursive matters: Bazecor stores backups under a per-device folder
+# (e.g. .../Defy/3d46475fe5df0deb/) whose name changes if the keyboard is re-paired,
+# so we watch the whole tree rather than one subfolder.
+
+# Deliberately no -e: a single failed sync must not kill a long-running watcher.
+set -uo pipefail
+
+readonly SRC="${DYGMA_BACKUP_DIR:-$HOME/Dygma/Backups/Defy}"
+readonly FNS="${DYGMA_SYNC_FNS:-$HOME/.config/bash/fns/dygma-sync.sh}"
+
+command -v inotifywait >/dev/null || {
+  printf 'dygma-watch: inotifywait not found, install inotify-tools\n' >&2
+  exit 1
+}
+
+[[ -d $SRC ]] || {
+  printf 'dygma-watch: no backup dir at %s\n' "$SRC" >&2
+  exit 1
+}
+
+# dygsync lives in the shell fns so it stays usable by hand; sourcing it keeps
+# the copy/prune logic in one place instead of duplicating it here.
+# shellcheck source=/dev/null
+source "$FNS" || {
+  printf 'dygma-watch: could not source %s\n' "$FNS" >&2
+  exit 1
+}
+
+declare -F dygsync >/dev/null || {
+  printf 'dygma-watch: %s did not define dygsync\n' "$FNS" >&2
+  exit 1
+}
+
+printf 'dygma-watch: watching %s\n' "$SRC"
+
+# close_write catches Bazecor finishing a write; moved_to catches a file written
+# elsewhere and renamed into place.
+inotifywait --monitor --recursive --quiet \
+  --event close_write --event moved_to \
+  --format '%w%f' "$SRC" |
+  while read -r changed; do
+    [[ $changed == *.json ]] || continue
+    # Drain any follow-up events off the same pipe so a burst of writes results
+    # in one sync rather than one per file.
+    while read -r -t 2 _; do :; done
+    dygsync || printf 'dygma-watch: sync failed after %s\n' "$changed" >&2
+  done

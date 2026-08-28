@@ -1,0 +1,13 @@
+[Unit]
+Description=Sync newest Dygma Defy backup into dotfiles
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/dygma-watch
+# Covers the backup dir being removed and recreated, which would otherwise leave
+# the watch pointing at a dead inode.
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
