@@ -30,9 +30,11 @@
 
 hl.unbind("SUPER + SHIFT + C")
 o.bind("SUPER + SHIFT + C", "Claude cloud", "omarchy-launch-webapp https://claude.ai/new")
-hl.unbind("SUPER + ALT + SHIFT + S")
+hl.unbind("SUPER + SHIFT + G")
+o.bind("SUPER + SHIFT + G", "Github - Profile", "omarchy-launch-webapp https://github.com/a-yose")
+hl.unbind("SUPER + SHIFT + S")
 o.bind(
-	"SUPER + ALT + SHIFT + S",
+	"SUPER + SHIFT + S",
 	"Supabase",
 	"omarchy-launch-webapp http://127.0.0.1:54323/project/default/editor/20982?schema=public"
 )
