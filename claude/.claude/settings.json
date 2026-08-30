@@ -8,7 +8,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "jq -r --arg h \"$HOME\" '(.context_window.used_percentage // 0) as $p | (if $p >= 80 then \"\\u001b[31m\" elif $p >= 50 then \"\\u001b[33m\" else \"\\u001b[32m\" end) as $pc | \"\\u001b[2m[\\u001b[0m\\u001b[36m\\(.model.display_name)\\u001b[0m \\u001b[2m·\\u001b[0m \\u001b[35m\\(.effort.level // \"-\")\\u001b[0m\\u001b[2m]\\u001b[0m \\u001b[34m\\((.cwd // .workspace.current_dir // \"\") | sub(\"^\"+$h; \"~\"))\\u001b[0m \\u001b[2m·\\u001b[0m \\($pc)\\($p)%\\u001b[0m \\u001b[2mcontext\\u001b[0m\"'",
@@ -19,6 +19,9 @@
   },
   "modelSettings": {
     "claude-opus-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-fable-5": {
       "effortLevel": "xhigh"
     }
   },

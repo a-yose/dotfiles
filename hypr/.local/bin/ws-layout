@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Bring up the standing work layout.
+#
+#   ws-layout              # start anything not already running
+#   ws-layout --dry-run    # show what it would start
+#
+# This script only LAUNCHES. Where each window lands is decided by the class
+# rules in ~/.config/hypr/windows.lua, so a window opened by hand or by a
+# keybinding ends up in the same place. Every launcher here is launch-or-focus,
+# so re-running is safe: already-open windows are focused, not duplicated.
+#
+# ORDER MATTERS. Your workspaces use the scrolling layout, so columns appear
+# left-to-right in the order the windows open. Each entry waits for its window
+# before the next one starts, which keeps that order deterministic.
+
+set -uo pipefail
+
+DRY=0
+[[ ${1:-} == --dry-run ]] && DRY=1
+[[ ${1:-} == -h || ${1:-} == --help ]] && { sed -n '2,16p' "$0" | sed 's/^# \?//'; exit 0; }
+
+open() { hyprctl clients -j | jq -e --arg c "$1" '.[] | select(.class == $c)' >/dev/null 2>&1; }
+
+# Poll until the window shows up, so the next launch can't race ahead of it.
+wait_for() {
+  local class=$1 tries=${2:-40}
+  while ((tries--)); do open "$class" && return 0; sleep 0.25; done
+  echo "   ! timed out waiting for $class" >&2
+  return 1
+}
+
+run() {  # run <class> <command...>
+  local class=$1; shift
+  if open "$class"; then echo "ok     $class"; return; fi
+  if ((DRY)); then echo "start  $class  ->  $*"; return; fi
+  echo "start  $class"
+  setsid "$@" >/dev/null 2>&1 &
+  wait_for "$class"
+}
+
+webapp() { run "$1" omarchy-launch-or-focus-webapp "$1" "$2"; }
+tui()    { run "$1" omarchy-launch-or-focus-tui --app-id="$1" "${@:2}"; }
+
+# ---------------------------------------------------------------- the layout
+# ws 1-3 DP-1 (ultrawide) | ws 4 LG UltraGear | ws 5 laptop
+
+# ws 2 -- scratch shell
+run dev.baz.shell ghostty --gtk-single-instance=false --class=dev.baz.shell
+
+# ws 3 -- notes
+run md.obsidian.Obsidian uwsm-app -- obsidian
+
+# ws 4 -- project workspace, left to right
+tui    org.omarchy.omarchy-launch-docker-tui omarchy-launch-docker-tui
+webapp chrome-github.com__a-yose-Profile_1 https://github.com/a-yose
+webapp chrome-supabase.com__dashboard_project_ytjfmlzpqriaxgizkuta-Profile_1 \
+       https://supabase.com/dashboard/project/ytjfmlzpqriaxgizkuta
+webapp chrome-127.0.0.1__project_default_editor_20982-Profile_1 \
+       'http://127.0.0.1:54323/project/default/editor/20982?schema=public'
+
+# ws 5 -- music
+run Spotify omarchy-launch-spotify
+
+# ws 1 -- TODO: your Gmail and Vercel windows are plain `chromium`, so they all
+# share one class and can't be placed. Convert them to webapps to give each its
+# own class, then add a rule in windows.lua. See the notes from the walkthrough.
+# webapp chrome-mail.google.com__mail_u_0-Profile_1 https://mail.google.com/mail/u/0

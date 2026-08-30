@@ -29,16 +29,36 @@
 -- o.bind("SUPER + PERIOD", nil, "omarchy-shell shell toggle omarchy.emojis")
 
 hl.unbind("SUPER + SHIFT + C")
-o.bind("SUPER + SHIFT + C", "Claude cloud", "omarchy-launch-webapp https://claude.ai/new")
+o.bind(
+	"SUPER + SHIFT + C",
+	"Claude cloud",
+	"omarchy-launch-or-focus-webapp chrome-claude.ai__new-Profile_1 https://claude.ai/new"
+)
 hl.unbind("SUPER + SHIFT + G")
-o.bind("SUPER + SHIFT + G", "Github - Profile", "omarchy-launch-webapp https://github.com/a-yose")
+o.bind(
+	"SUPER + SHIFT + G",
+	"Github - Profile",
+	"omarchy-launch-or-focus-webapp chrome-github.com__a-yose-Profile_1 https://github.com/a-yose"
+)
+hl.unbind("SUPER + SHIFT + ALT + S")
+o.bind(
+	"SUPER + SHIFT + ALT + S",
+	"Supabase - Prod",
+	"omarchy-launch-or-focus-webapp chrome-supabase.com__dashboard_project_ytjfmlzpqriaxgizkuta-Profile_1 https://supabase.com/dashboard/project/ytjfmlzpqriaxgizkuta"
+)
 hl.unbind("SUPER + SHIFT + S")
 o.bind(
 	"SUPER + SHIFT + S",
-	"Supabase",
-	"omarchy-launch-webapp http://127.0.0.1:54323/project/default/editor/20982?schema=public"
+	"Supabase - Local",
+	"omarchy-launch-or-focus-webapp chrome-127.0.0.1__project_default_editor_20982-Profile_1 http://127.0.0.1:54323/project/default/editor/20982?schema=public"
 )
 hl.unbind("SUPER + M")
 o.bind("SUPER + M", "Monitor Config", "ghostty -e nvim ~/dotfiles/hypr/.config/hypr/monitors.lua")
 hl.unbind("SUPER + ALT + N")
 o.bind("SUPER + ALT + N", "Edit Neovim Config", "cd ~/dotfiles/nvim/.config/nvim && ghostty -e nvim")
+
+-- Omarchy's default is { launch = "obsidian", focus = "^obsidian$" }, but the
+-- real class is md.obsidian.Obsidian, so that pattern matches nothing and the
+-- binding relaunched Obsidian instead of focusing the open window.
+hl.unbind("SUPER + SHIFT + O")
+o.bind("SUPER + SHIFT + O", "Obsidian", { launch = "obsidian", focus = "md.obsidian.Obsidian" })
