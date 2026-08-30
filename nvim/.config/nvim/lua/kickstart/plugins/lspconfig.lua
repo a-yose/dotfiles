@@ -212,6 +212,7 @@ return {
             end
           end,
         },
+        jsonls = {},
         cssls = {},
         marksman = {},
         html = {},
