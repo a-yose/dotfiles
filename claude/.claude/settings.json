@@ -39,7 +39,11 @@
     "ask": [
       "Bash(vercel *)",
       "Bash(dangerouslyDisableSandbox:true)",
-      "Bash(stow)"
+      "Bash(stow)",
+      "Edit(//home/baz/dotfiles/claude/.claude/settings.json)",
+      "Edit(//home/baz/.claude/settings.json)",
+      "Write(//home/baz/dotfiles/claude/.claude/settings.json)",
+      "Write(//home/baz/.claude/settings.json)"
     ],
     "defaultMode": "plan"
   },
