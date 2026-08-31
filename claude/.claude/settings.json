@@ -20,7 +20,21 @@
       "Bash(git rebase*)",
       "Bash(gh pr create*)",
       "Bash(gh pr merge*)",
-      "Bash(lazygit*)"
+      "Bash(lazygit*)",
+      "Read(//home/baz/.ssh/**)",
+      "Edit(//home/baz/.ssh/**)",
+      "Read(//home/baz/.config/gh/hosts.yml)",
+      "Read(//home/baz/.config/chromium/**)",
+      "Read(//home/baz/.config/google-chrome/**)",
+      "Read(//home/baz/.config/google-chrome-beta/**)",
+      "Read(//home/baz/.config/google-chrome-unstable/**)",
+      "Read(//home/baz/.config/BraveSoftware/**)",
+      "Read(//home/baz/.config/microsoft-edge/**)",
+      "Read(//home/baz/.config/microsoft-edge-dev/**)",
+      "Read(//home/baz/.config/mozilla/**)",
+      "Read(//home/baz/.config/obsidian/**)",
+      "Read(//home/baz/.config/cliamp/spotify_credentials.json)",
+      "Read(//home/baz/.local/share/keyrings/**)"
     ],
     "ask": [
       "Bash(vercel *)",
