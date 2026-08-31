@@ -53,6 +53,38 @@
         {
           "path": "~/.config/gh/hosts.yml",
           "mode": "deny"
+        },
+        {
+          "path": "~/.config/chromium",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/google-chrome",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/BraveSoftware",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/microsoft-edge",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/mozilla",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/obsidian",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/cliamp/spotify_credentials.json",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.local/share/keyrings",
+          "mode": "deny"
         }
       ],
       "envVars": [
