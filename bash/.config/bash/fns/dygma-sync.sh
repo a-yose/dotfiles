@@ -17,8 +17,8 @@ dygsync() {
   }
 
   local newest
-  newest=$(find "$src_root" -type f -name '*.json' -printf '%T@\t%p\n' 2>/dev/null |
-    sort -rn | head -1 | cut -f2-)
+  newest=$(find "$src_root" -type f -name '*.json' -printf '%T@\t%p\n' 2>/dev/null \
+    | sort -rn | head -1 | cut -f2-)
   [[ -n $newest ]] || {
     echo "dygsync: no backups found under $src_root" >&2
     return 1
@@ -35,8 +35,8 @@ dygsync() {
   fi
 
   local -a stale
-  mapfile -t stale < <(find "$dest" -maxdepth 1 -type f -name '*.json' -printf '%T@\t%p\n' |
-    sort -rn | tail -n +$((keep + 1)) | cut -f2-)
+  mapfile -t stale < <(find "$dest" -maxdepth 1 -type f -name '*.json' -printf '%T@\t%p\n' \
+    | sort -rn | tail -n +$((keep + 1)) | cut -f2-)
   if ((${#stale[@]})); then
     rm -f "${stale[@]}"
     printf 'dygsync: removed %s\n' "${stale[@]##*/}"

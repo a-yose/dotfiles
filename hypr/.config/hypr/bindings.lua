@@ -28,36 +28,27 @@
 -- o.bind("SUPER + H", nil, "voxtype record toggle")
 -- o.bind("SUPER + PERIOD", nil, "omarchy-shell shell toggle omarchy.emojis")
 
+local apps = require("hypr.apps")
+
+-- Web apps. o.launch_webapp_sole builds the launch-or-focus command with the
+-- class as the match pattern, which is what Omarchy's shorthand
+-- ({ webapp = url, focus = true }) gets wrong: that form matches on the
+-- binding's description instead, so "Vercel CJ" would never find the window.
 hl.unbind("SUPER + SHIFT + C")
-o.bind(
-	"SUPER + SHIFT + C",
-	"Claude cloud",
-	"omarchy-launch-or-focus-webapp chrome-claude.ai__new-Profile_1 https://claude.ai/new"
-)
+o.bind("SUPER + SHIFT + C", "Claude cloud", o.launch_webapp_sole(apps.claude.class, apps.claude.url))
 hl.unbind("SUPER + SHIFT + G")
-o.bind(
-	"SUPER + SHIFT + G",
-	"Github - Profile",
-	"omarchy-launch-or-focus-webapp chrome-github.com__a-yose-Profile_1 https://github.com/a-yose"
-)
+o.bind("SUPER + SHIFT + G", "Github - Profile", o.launch_webapp_sole(apps.github.class, apps.github.url))
 hl.unbind("SUPER + SHIFT + V")
-o.bind(
-	"SUPER + SHIFT + V",
-	"Vercel CJ",
-	"omarchy-launch-or-focus-webapp chrome-vercel.com__brents-projects-14fb3145_climbing-journal-Profile_1 https://vercel.com/brents-projects-14fb3145/climbing-journal"
-)
+o.bind("SUPER + SHIFT + V", "Vercel CJ", o.launch_webapp_sole(apps.vercel.class, apps.vercel.url))
 hl.unbind("SUPER + SHIFT + ALT + S")
-o.bind(
-	"SUPER + SHIFT + ALT + S",
-	"Supabase - Prod",
-	"omarchy-launch-or-focus-webapp chrome-supabase.com__dashboard_project_ytjfmlzpqriaxgizkuta-Profile_1 https://supabase.com/dashboard/project/ytjfmlzpqriaxgizkuta"
-)
+o.bind("SUPER + SHIFT + ALT + S", "Supabase - Prod", o.launch_webapp_sole(apps.supabase.class, apps.supabase.url))
 hl.unbind("SUPER + SHIFT + S")
 o.bind(
 	"SUPER + SHIFT + S",
 	"Supabase - Local",
-	"omarchy-launch-or-focus-webapp chrome-127.0.0.1__project_default_editor_20982-Profile_1 http://127.0.0.1:54323/project/default/editor/20982?schema=public"
+	o.launch_webapp_sole(apps.supabase_local.class, apps.supabase_local.url)
 )
+
 hl.unbind("SUPER + M")
 o.bind("SUPER + M", "Monitor Config", "ghostty -e nvim ~/dotfiles/hypr/.config/hypr/monitors.lua")
 hl.unbind("SUPER + ALT + N")
@@ -67,4 +58,4 @@ o.bind("SUPER + ALT + N", "Edit Neovim Config", "cd ~/dotfiles/nvim/.config/nvim
 -- real class is md.obsidian.Obsidian, so that pattern matches nothing and the
 -- binding relaunched Obsidian instead of focusing the open window.
 hl.unbind("SUPER + SHIFT + O")
-o.bind("SUPER + SHIFT + O", "Obsidian", { launch = "obsidian", focus = "md.obsidian.Obsidian" })
+o.bind("SUPER + SHIFT + O", "Obsidian", { launch = "obsidian", focus = apps.obsidian.class })

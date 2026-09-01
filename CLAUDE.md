@@ -84,14 +84,16 @@ is not on `PATH` — it lives in mason:
 ```bash
 shfmt -i 2 -ci -bn -w <script>   # flags match the nvim conform config
 shellcheck <script>
-stylua <file>.lua                # nvim lua only — nvim/.config/nvim/.stylua.toml
+stylua <file>.lua                # nvim + hypr lua; .stylua.toml is nvim-only
 prettier --write <file>          # prettier/.config/prettier/.prettierrc
 ~/.local/share/nvim/mason/bin/markdownlint <file>.md
 ```
 
+Every shell script here is `shfmt`-formatted — run it before committing. There
+are no hand-formatted exceptions.
+
 ```bash
 hyprctl activewindow -j | jq '{class, title}'   # find a class for a window rule
-ws-layout --dry-run                             # what the layout would launch
 
 # Every binding on one key, before you claim it. Filter on the key -- scanning
 # descriptions misses binds that carry none. modmask is a sum: SHIFT 1, CTRL 4,
@@ -115,38 +117,37 @@ is active.
 **hypr** — `hyprland.lua` runs Omarchy's bootstrap, requires Omarchy's defaults,
 then the personal overrides. The `hl` and `o` globals come from Omarchy's
 helpers; `.luarc.json` declares them for the LSP and is kept out of `$HOME` by
-`hypr/.stow-local-ignore`.
+`hypr/.stow-local-ignore`, which also excludes `.claude/`.
 
-Window placement is declarative across three files, so a window lands in the same
+Window placement is declarative across four files, so a window lands in the same
 place no matter what opened it:
 
+- `apps.lua` — window classes and web-app URLs, defined once, required by the
+  other three
 - `monitors.lua` — workspace → monitor, and which workspaces scroll
 - `windows.lua` — window class → workspace (matched once, at open)
-- `hypr/.local/bin/ws-layout` — only _launches_. Order matters: scrolling-layout
-  columns appear in open order, so the script waits for each window before
-  starting the next.
+- `autostart.lua` — only _launches_, on the `hyprland.start` event
 
-`autostart.lua` runs `ws-layout` at login through `o.launch_on_start`, which
-wraps it in `uwsm-app --` and starts it from the compositor's environment. Every
-launcher in the script is launch-or-focus, so re-running it by hand is safe.
+`autostart.lua` brings up the standing work layout at login. Its local `start()`
+helper skips anything already open (`hl.get_windows({ class = ... })`), so the
+event firing a second time can't duplicate the layout, and nothing steals focus.
+The commands come from Omarchy's `o.launch`, `o.launch_webapp` and
+`o.launch_webapp_sole` helpers, which handle the shell quoting. Login is the
+only trigger — there is deliberately no keybinding to re-run it.
 
-Three things about `ws-layout` are not obvious from reading it:
+Two things about the layout are not obvious:
 
 - **A TUI needs a terminal host to get a class.** `herdr` and the docker TUI have
-  no window flags of their own, so they go through the `tui()` helper →
-  `omarchy-launch-or-focus-tui --app-id=<class>`, which is what supplies the
-  string `windows.lua` matches on. Only that app-id is pinned — a herdr window
-  opened by hand (`SUPER + CTRL + ENTER`) keeps the shared
-  `com.mitchellh.ghostty` class and lands wherever you already are.
-- **It unsets `HERDR_*` before launching anything.** herdr refuses to start when
-  it sees `HERDR_PANE_ID` ("nested herdr is disabled by default"), which is
-  exactly what happens if you run `ws-layout` from inside a herdr pane. Login and
-  a plain terminal are already clean; the unset only covers that case.
-- **Do not run `shfmt` on it, and keep edits below the header.** It is
-  hand-formatted with compact one-line function bodies, so `shfmt -i 2 -ci -bn -d`
-  reports a large diff against the file as it stands. `--help` prints
-  `sed -n '2,16p' "$0"`, so inserting lines in the header block silently truncates
-  it. `bash -n` and `shellcheck` are clean — keep them that way.
+  no window flags of their own, so they go through
+  `omarchy-launch-tui --app-id=<class>`, which is what supplies the string
+  `windows.lua` matches on. Only that app-id is pinned — a herdr window opened by
+  hand (`SUPER + CTRL + ENTER`) keeps the shared `com.mitchellh.ghostty` class
+  and lands wherever you already are.
+- **`hl.exec_cmd` spawns from the compositor's environment.** That is what keeps
+  herdr happy: it refuses to start when it sees `HERDR_PANE_ID` ("nested herdr is
+  disabled by default"), and the compositor never has those variables set. This
+  is why no `HERDR_*` unset is needed — a shell script launched from inside a
+  herdr pane would have required one.
 
 **Web apps** — a "web app" is Chromium's `--app=<url>` mode, launched by
 `omarchy-launch-webapp`. It is the only way to give a browser window its own
@@ -155,12 +156,13 @@ Chromium derives the class as `chrome-<host>_<path, / → _>-Profile_1`, droppin
 port, query and fragment — so `https://github.com/a-yose` becomes
 `chrome-github.com__a-yose-Profile_1`, the double underscore being the joiner
 plus the path's leading slash. Derive it, then **confirm it** with
-`hyprctl activewindow -j | jq '{class, title}'`: it is the load-bearing string in
-three places at once.
+`hyprctl activewindow -j | jq '{class, title}'`: it is load-bearing in three
+files at once, which is why it is defined once in `hypr/.config/hypr/apps.lua`
+and referenced by name from each of them.
 
-- `hypr/.local/bin/ws-layout` — the `webapp` launch line
 - `hypr/.config/hypr/windows.lua` — the workspace rule
 - `hypr/.config/hypr/bindings.lua` — the launch-or-focus keybinding
+- `hypr/.config/hypr/autostart.lua` — the already-open check and launch line
 
 The `.desktop` entries live in `~/.local/share/applications`, which is **not
 stowed**, so they are not in this repo at all. `install-webapps.sh` in

@@ -42,8 +42,8 @@ printf 'dygma-watch: watching %s\n' "$SRC"
 # elsewhere and renamed into place.
 inotifywait --monitor --recursive --quiet \
   --event close_write --event moved_to \
-  --format '%w%f' "$SRC" |
-  while read -r changed; do
+  --format '%w%f' "$SRC" \
+  | while read -r changed; do
     [[ $changed == *.json ]] || continue
     # Drain any follow-up events off the same pipe so a burst of writes results
     # in one sync rather than one per file.
