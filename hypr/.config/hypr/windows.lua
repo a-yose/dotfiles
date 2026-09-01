@@ -10,10 +10,11 @@
 -- "N silent" places the window on workspace N without dragging focus there.
 -- Workspace -> monitor mapping lives in monitors.lua.
 
--- ws 2 (DP-1 ultrawide) -- scratch shell.
--- Plain terminals keep the shared com.mitchellh.ghostty class so they still
--- open wherever you are; only this dedicated app-id is pinned to ws 2.
-o.window("dev.baz.shell", { workspace = "2 silent" })
+-- ws 2 (DP-1 ultrawide) -- herdr session.
+-- herdr is a TUI, so a herdr window opened by hand (SUPER + CTRL + ENTER) keeps
+-- the shared com.mitchellh.ghostty class and opens wherever you are; only the
+-- dedicated app-id ws-layout gives it is pinned to ws 2.
+o.window("dev.baz.herdr", { workspace = "2 silent" })
 
 -- ws 3 (DP-1 ultrawide) -- notes
 o.window("md.obsidian.Obsidian", { workspace = "3 silent", suppress_event = "activate activatefocus" })
@@ -23,6 +24,7 @@ o.window("md.obsidian.Obsidian", { workspace = "3 silent", suppress_event = "act
 -- launch order in ws-layout is what sets the left-to-right arrangement.
 o.window("org.omarchy.omarchy-launch-docker-tui", { workspace = "4 silent" })
 o.window("chrome-github.com__a-yose-Profile_1", { workspace = "4 silent" })
+o.window("chrome-vercel.com__brents-projects-14fb3145_climbing-journal-Profile_1", { workspace = "4 silent" })
 o.window("chrome-supabase.com__dashboard_project_ytjfmlzpqriaxgizkuta-Profile_1", { workspace = "4 silent" })
 o.window("chrome-127.0.0.1__project_default_editor_20982-Profile_1", { workspace = "4 silent" })
 

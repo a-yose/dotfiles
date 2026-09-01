@@ -15,6 +15,12 @@
 
 set -uo pipefail
 
+# Nothing launched from here should think it lives in a herdr pane, and herdr
+# itself hard-refuses to start when it sees HERDR_PANE_ID ("nested herdr is
+# disabled by default"). The post-login hook and a plain terminal both start
+# clean; this only matters when you run ws-layout from inside herdr.
+unset HERDR_PANE_ID HERDR_TAB_ID HERDR_WORKSPACE_ID HERDR_SOCKET_PATH HERDR_ENV
+
 DRY=0
 [[ ${1:-} == --dry-run ]] && DRY=1
 [[ ${1:-} == -h || ${1:-} == --help ]] && { sed -n '2,16p' "$0" | sed 's/^# \?//'; exit 0; }
@@ -44,8 +50,9 @@ tui()    { run "$1" omarchy-launch-or-focus-tui --app-id="$1" "${@:2}"; }
 # ---------------------------------------------------------------- the layout
 # ws 1-3 DP-1 (ultrawide) | ws 4 LG UltraGear | ws 5 laptop
 
-# ws 2 -- scratch shell
-run dev.baz.shell ghostty --gtk-single-instance=false --class=dev.baz.shell
+# ws 2 -- herdr session. herdr is a TUI with no window flags of its own, so it
+# needs a terminal host to carry the app-id that windows.lua matches on.
+tui dev.baz.herdr herdr
 
 # ws 3 -- notes
 run md.obsidian.Obsidian uwsm-app -- obsidian
@@ -53,6 +60,8 @@ run md.obsidian.Obsidian uwsm-app -- obsidian
 # ws 4 -- project workspace, left to right
 tui    org.omarchy.omarchy-launch-docker-tui omarchy-launch-docker-tui
 webapp chrome-github.com__a-yose-Profile_1 https://github.com/a-yose
+webapp chrome-vercel.com__brents-projects-14fb3145_climbing-journal-Profile_1 \
+       https://vercel.com/brents-projects-14fb3145/climbing-journal
 webapp chrome-supabase.com__dashboard_project_ytjfmlzpqriaxgizkuta-Profile_1 \
        https://supabase.com/dashboard/project/ytjfmlzpqriaxgizkuta
 webapp chrome-127.0.0.1__project_default_editor_20982-Profile_1 \
@@ -61,7 +70,7 @@ webapp chrome-127.0.0.1__project_default_editor_20982-Profile_1 \
 # ws 5 -- music
 run Spotify omarchy-launch-spotify
 
-# ws 1 -- TODO: your Gmail and Vercel windows are plain `chromium`, so they all
-# share one class and can't be placed. Convert them to webapps to give each its
-# own class, then add a rule in windows.lua. See the notes from the walkthrough.
+# ws 1 -- TODO: your Gmail window is still a plain `chromium`, so it shares one
+# class with every other plain chromium window and can't be placed. Convert it to
+# a webapp to give it its own class, then add a rule in windows.lua.
 # webapp chrome-mail.google.com__mail_u_0-Profile_1 https://mail.google.com/mail/u/0

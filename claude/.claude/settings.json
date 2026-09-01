@@ -3,6 +3,7 @@
   "permissions": {
     "allow": [
       "Bash(git status *)",
+      "Bash(hyprctl clients *)",
       "Bash(git log *)",
       "Bash(rg *)",
       "Bash(ls *)"

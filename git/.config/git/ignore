@@ -4,3 +4,12 @@
 SessionLocal.vim
 
 **/.claude/.cc-writes/
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+.gitconfig
+.gitmodules
+.ripgreprc
+.idea

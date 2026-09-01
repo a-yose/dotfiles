@@ -40,6 +40,12 @@ o.bind(
 	"Github - Profile",
 	"omarchy-launch-or-focus-webapp chrome-github.com__a-yose-Profile_1 https://github.com/a-yose"
 )
+hl.unbind("SUPER + SHIFT + V")
+o.bind(
+	"SUPER + SHIFT + V",
+	"Vercel CJ",
+	"omarchy-launch-or-focus-webapp chrome-vercel.com__brents-projects-14fb3145_climbing-journal-Profile_1 https://vercel.com/brents-projects-14fb3145/climbing-journal"
+)
 hl.unbind("SUPER + SHIFT + ALT + S")
 o.bind(
 	"SUPER + SHIFT + ALT + S",
