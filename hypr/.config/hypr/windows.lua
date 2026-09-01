@@ -16,7 +16,12 @@ local apps = require("hypr.apps")
 -- herdr is a TUI, so a herdr window opened by hand (SUPER + CTRL + ENTER) keeps
 -- the shared com.mitchellh.ghostty class and opens wherever you are; only the
 -- dedicated app-id autostart.lua gives it is pinned to ws 2.
-o.window(apps.herdr.class, { workspace = "2 silent" })
+--
+-- `maximize` opens it at the full workspace width while leaving it tiled, so
+-- gaps and borders still apply. Without it the width depends on ws 2's current
+-- layout and on whether anything else shares the workspace -- a scrolling
+-- column opens at scrolling:column_width (0.5) as soon as it isn't alone.
+o.window(apps.herdr.class, { workspace = "2 silent", maximize = true })
 
 -- ws 3 (DP-1 ultrawide) -- notes
 o.window(apps.obsidian.class, { workspace = "3 silent", suppress_event = "activate activatefocus" })
