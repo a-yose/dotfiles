@@ -22,7 +22,9 @@ services. This file is the model behind them.
 
 The installer is **not in this repo**. It lives in `~/omarchy-setup/`:
 `install-dotfiles.sh` (clones/pulls and stows), `master-install.sh` (runs every
-`install-*.sh`), and `bashrc-drift-check` (orphaned — not wired in, run by hand).
+`install-*.sh`), `install-webapps.sh` (the Chromium web-app launchers, which are
+not stowed — see **Web apps** below), and `bashrc-drift-check` (orphaned — not
+wired in, run by hand).
 
 Adding a package here is half the job. Without a `stow_package <pkg>` line in
 `install-dotfiles.sh`, a fresh machine silently won't get it. **Nothing enforces
@@ -90,6 +92,11 @@ prettier --write <file>          # prettier/.config/prettier/.prettierrc
 ```bash
 hyprctl activewindow -j | jq '{class, title}'   # find a class for a window rule
 ws-layout --dry-run                             # what the layout would launch
+
+# Every binding on one key, before you claim it. Filter on the key -- scanning
+# descriptions misses binds that carry none. modmask is a sum: SHIFT 1, CTRL 4,
+# ALT 8, SUPER 64, so SUPER+SHIFT is 65, SUPER+CTRL 68, SUPER+ALT 72.
+hyprctl binds -j | jq -r '.[] | select((.key|ascii_downcase) == "v") | "\(.modmask)\t\(.description)"'
 ```
 
 ## Architecture: layering, not replacing
@@ -118,6 +125,51 @@ place no matter what opened it:
 - `hypr/.local/bin/ws-layout` — only _launches_. Order matters: scrolling-layout
   columns appear in open order, so the script waits for each window before
   starting the next.
+
+`autostart.lua` runs `ws-layout` at login through `o.launch_on_start`, which
+wraps it in `uwsm-app --` and starts it from the compositor's environment. Every
+launcher in the script is launch-or-focus, so re-running it by hand is safe.
+
+Three things about `ws-layout` are not obvious from reading it:
+
+- **A TUI needs a terminal host to get a class.** `herdr` and the docker TUI have
+  no window flags of their own, so they go through the `tui()` helper →
+  `omarchy-launch-or-focus-tui --app-id=<class>`, which is what supplies the
+  string `windows.lua` matches on. Only that app-id is pinned — a herdr window
+  opened by hand (`SUPER + CTRL + ENTER`) keeps the shared
+  `com.mitchellh.ghostty` class and lands wherever you already are.
+- **It unsets `HERDR_*` before launching anything.** herdr refuses to start when
+  it sees `HERDR_PANE_ID` ("nested herdr is disabled by default"), which is
+  exactly what happens if you run `ws-layout` from inside a herdr pane. Login and
+  a plain terminal are already clean; the unset only covers that case.
+- **Do not run `shfmt` on it, and keep edits below the header.** It is
+  hand-formatted with compact one-line function bodies, so `shfmt -i 2 -ci -bn -d`
+  reports a large diff against the file as it stands. `--help` prints
+  `sed -n '2,16p' "$0"`, so inserting lines in the header block silently truncates
+  it. `bash -n` and `shellcheck` are clean — keep them that way.
+
+**Web apps** — a "web app" is Chromium's `--app=<url>` mode, launched by
+`omarchy-launch-webapp`. It is the only way to give a browser window its own
+Hyprland class; plain `chromium` windows all share one class and can't be placed.
+Chromium derives the class as `chrome-<host>_<path, / → _>-Profile_1`, dropping
+port, query and fragment — so `https://github.com/a-yose` becomes
+`chrome-github.com__a-yose-Profile_1`, the double underscore being the joiner
+plus the path's leading slash. Derive it, then **confirm it** with
+`hyprctl activewindow -j | jq '{class, title}'`: it is the load-bearing string in
+three places at once.
+
+- `hypr/.local/bin/ws-layout` — the `webapp` launch line
+- `hypr/.config/hypr/windows.lua` — the workspace rule
+- `hypr/.config/hypr/bindings.lua` — the launch-or-focus keybinding
+
+The `.desktop` entries live in `~/.local/share/applications`, which is **not
+stowed**, so they are not in this repo at all. `install-webapps.sh` in
+`~/omarchy-setup` owns them: a `name|url|icon` list, one line per app, skipped
+when the file already exists. That entry only puts the app in the launcher
+(`SUPER + SPACE`) — it plays no part in the class, so the layout and the
+keybindings work with or without it. Leave `icon` empty to fetch the site's own
+favicon; set it when that can't work on a fresh machine, as with the local
+Supabase URL whose `127.0.0.1` port won't be listening.
 
 **Dygma keyboard** — `dygma/backups/Defy/*.json` are generated, never
 hand-edited. The `dygsync` function (`bash/.config/bash/fns/dygma-sync.sh`)
