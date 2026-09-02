@@ -53,14 +53,27 @@
     "command": "jq -r --arg h \"$HOME\" '(.context_window.used_percentage // 0) as $p | (if $p >= 80 then \"\\u001b[31m\" elif $p >= 50 then \"\\u001b[33m\" else \"\\u001b[32m\" end) as $pc | \"\\u001b[2m[\\u001b[0m\\u001b[36m\\(.model.display_name)\\u001b[0m \\u001b[2m·\\u001b[0m \\u001b[35m\\(.effort.level // \"-\")\\u001b[0m\\u001b[2m]\\u001b[0m \\u001b[34m\\((.cwd // .workspace.current_dir // \"\") | sub(\"^\"+$h; \"~\"))\\u001b[0m \\u001b[2m·\\u001b[0m \\($pc)\\($p)%\\u001b[0m \\u001b[2mcontext\\u001b[0m\"'",
     "padding": 0
   },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
+  },
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
     "network": {
-      "allowedDomains": ["registry.npmjs.org", "*.github.com", "github.com"]
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "*.github.com",
+        "github.com"
+      ]
     },
     "filesystem": {
-      "allowWrite": ["~/dotfiles", "~/omarchy-setup"]
+      "allowWrite": [
+        "~/dotfiles",
+        "~/omarchy-setup"
+      ]
     },
     "credentials": {
       "files": [
@@ -116,14 +129,16 @@
         }
       ]
     },
-    "excludedCommands": ["docker *"]
+    "excludedCommands": [
+      "docker *"
+    ]
   },
   "spellcheck": {
     "enabled": true
   },
   "modelSettings": {
     "claude-opus-5": {
-      "effortLevel": "xhigh"
+      "effortLevel": "medium"
     },
     "claude-fable-5": {
       "effortLevel": "xhigh"
@@ -132,8 +147,5 @@
   "autoUpdatesChannel": "stable",
   "theme": "auto",
   "editorMode": "vim",
-  "fileCheckpointingEnabled": true,
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true
-  }
+  "fileCheckpointingEnabled": true
 }
