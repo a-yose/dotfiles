@@ -10,16 +10,12 @@
     ],
     "deny": [
       "Bash(supabase db push *)",
-      "Bash(git add*)",
-      "Bash(git stage*)",
-      "Bash(git commit*)",
       "Bash(git push*)",
       "Bash(git am*)",
       "Bash(git cherry-pick*)",
       "Bash(git revert*)",
       "Bash(git merge*)",
       "Bash(git rebase*)",
-      "Bash(gh pr create*)",
       "Bash(gh pr merge*)",
       "Bash(lazygit*)",
       "Read(//home/baz/.ssh/**)",
@@ -41,6 +37,10 @@
       "Bash(vercel *)",
       "Bash(dangerouslyDisableSandbox:true)",
       "Bash(stow)",
+      "Bash(gh pr create*)",
+      "Bash(git add*)",
+      "Bash(git stage*)",
+      "Bash(git commit*)",
       "Edit(**/.claude/settings*.json)",
       "Edit(~/.claude/settings*.json)",
       "Edit(**/.mcp.json)"
@@ -56,11 +56,11 @@
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
-    "filesystem": {
-      "allowWrite": ["~/dotfiles", "~/omarchy-setup"]
-    },
     "network": {
       "allowedDomains": ["registry.npmjs.org", "*.github.com", "github.com"]
+    },
+    "filesystem": {
+      "allowWrite": ["~/dotfiles", "~/omarchy-setup"]
     },
     "credentials": {
       "files": [
@@ -132,5 +132,8 @@
   "autoUpdatesChannel": "stable",
   "theme": "auto",
   "editorMode": "vim",
-  "fileCheckpointingEnabled": true
+  "fileCheckpointingEnabled": true,
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  }
 }
