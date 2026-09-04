@@ -46,11 +46,8 @@
       "Edit(~/.claude/settings*.json)",
       "Edit(**/.mcp.json)"
     ],
-    "defaultMode": "plan"
+    "defaultMode": "default"
   },
-  "disableClaudeAiConnectors": true,
-  "disableWorkflows": true,
-  "enableArtifact": false,
   "statusLine": {
     "type": "command",
     "command": "jq -r --arg h \"$HOME\" '(.context_window.current_usage // {}) as $u | (($u.input_tokens // 0) + ($u.cache_creation_input_tokens // 0) + ($u.cache_read_input_tokens // 0)) as $t | (.context_window.context_window_size // 0) as $w | (if $w > 0 then (($t / $w * 1000 | round) / 10) else 0 end) as $p | (if $t >= 1000 then \"\\(($t / 100 | round) / 10)K\" else \"\\($t)\" end) as $tok | (if $p >= 80 then \"\\u001b[31m\" elif $p >= 50 then \"\\u001b[33m\" else \"\\u001b[32m\" end) as $pc | \"\\u001b[2m[\\u001b[0m\\u001b[36m\\(.model.display_name)\\u001b[0m \\u001b[2m·\\u001b[0m \\u001b[35m\\(.effort.level // \"-\")\\u001b[0m\\u001b[2m]\\u001b[0m \\u001b[34m\\((.cwd // .workspace.current_dir // \"\") | sub(\"^\"+$h; \"~\"))\\u001b[0m \\u001b[2m·\\u001b[0m \\($pc)\\($tok) (\\($p)%)\\u001b[0m\"'",
@@ -67,17 +64,10 @@
     "enabled": true,
     "failIfUnavailable": true,
     "network": {
-      "allowedDomains": [
-        "registry.npmjs.org",
-        "*.github.com",
-        "github.com"
-      ]
+      "allowedDomains": ["registry.npmjs.org", "*.github.com", "github.com"]
     },
     "filesystem": {
-      "allowWrite": [
-        "~/dotfiles",
-        "~/omarchy-setup"
-      ]
+      "allowWrite": ["~/dotfiles", "~/omarchy-setup"]
     },
     "credentials": {
       "files": [
@@ -133,9 +123,7 @@
         }
       ]
     },
-    "excludedCommands": [
-      "docker *"
-    ]
+    "excludedCommands": ["docker *"]
   },
   "feedbackDrafts": "off",
   "spellcheck": {
@@ -143,15 +131,18 @@
   },
   "modelSettings": {
     "claude-opus-5": {
-      "effortLevel": "medium"
+      "effortLevel": "high"
     },
     "claude-fable-5": {
       "effortLevel": "xhigh"
     },
     "claude-fable-5-1": {
-      "effortLevel": "medium"
+      "effortLevel": "high"
     }
   },
+  "disableClaudeAiConnectors": true,
+  "disableWorkflows": true,
+  "enableArtifact": false,
   "autoCompactWindow": 142000,
   "autoUpdatesChannel": "stable",
   "theme": "auto",
