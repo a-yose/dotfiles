@@ -14,12 +14,12 @@ the installer's list.
 Pick the pattern first. Getting this wrong is the main way a config silently stops
 working.
 
-| Pattern                           | When                                            | Example         |
-| --------------------------------- | ----------------------------------------------- | --------------- |
-| `stow_package <pkg>`              | you own the whole config dir                    | `nvim`          |
-| `stow_package <pkg> --no-folding` | target dir also holds files you don't own       | `git`, `claude` |
-| don't stow; append an include     | Omarchy owns the file and rewrites it on update | `ghostty`       |
-| `stow_package <pkg> --adopt`      | last resort — see the warning below             | `hypr`          |
+| Pattern                                   | When                                            | Example         |
+| ----------------------------------------- | ----------------------------------------------- | --------------- |
+| `stow_package <pkg>`                      | you own the whole config dir                    | `nvim`          |
+| `stow_package <pkg> --no-folding`         | target dir also holds files you don't own       | `git`, `claude` |
+| `stow_package <pkg>` + an include         | Omarchy owns the file and rewrites it on update | `ghostty`       |
+| `stow_package <pkg> --no-folding --adopt` | last resort — see the warning below             | `hypr`          |
 
 ```bash
 mkdir -p ~/dotfiles/<pkg>/.config/<tool>
