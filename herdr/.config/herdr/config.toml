@@ -9,3 +9,6 @@ host_cursor = "native"
 
 [keys]
 prefix = "ctrl+space"
+switch_workspace = "prefix+shift+1..9"
+focus_agent = "prefix+alt+1..9"
+last_pane = "prefix+ctrl+l"

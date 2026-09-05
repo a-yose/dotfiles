@@ -15,6 +15,13 @@ return {
   },
   opts = {
     filesystem = {
+      filtered_items = {
+        visible = true,
+        never_show = {
+          '.git',
+          'node_modules',
+        },
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',
