@@ -11,3 +11,6 @@ shellcheck = "latest"
 shfmt = "latest"
 "npm:typescript-language-server" = "6.0.0"
 "npm:playwright" = "latest"
+
+[settings.upgrade]
+auto_prune = false

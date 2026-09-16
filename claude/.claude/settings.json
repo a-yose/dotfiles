@@ -32,7 +32,10 @@
       "Read(//home/baz/.config/mozilla/**)",
       "Read(//home/baz/.config/obsidian/**)",
       "Read(//home/baz/.config/cliamp/spotify_credentials.json)",
-      "Read(//home/baz/.local/share/keyrings/**)"
+      "Read(//home/baz/.local/share/keyrings/**)",
+      "Read(~/**/supabase/seed/private/*)",
+      "Read(~/**/.env)",
+      "Read(~/**/.env.*)"
     ],
     "ask": [
       "Bash(vercel *)",
@@ -59,7 +62,7 @@
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
+    "code-review@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": false,
     "mattpocock-skills@claude-plugins-official": true,
     "github@claude-plugins-official": true
@@ -68,16 +71,16 @@
     "enabled": true,
     "failIfUnavailable": true,
     "network": {
-      "allowedDomains": [
-        "registry.npmjs.org",
-        "*.github.com",
-        "github.com"
-      ]
+      "allowedDomains": ["registry.npmjs.org", "*.github.com", "github.com"]
     },
     "filesystem": {
-      "allowWrite": [
-        "~/dotfiles",
-        "~/omarchy-setup"
+      "allowWrite": ["~/dotfiles", "~/omarchy-setup"],
+      "denyRead": [
+        "~/projects/adventure-journal/.env",
+        "~/projects/adventure-journal/.env.development",
+        "~/projects/adventure-journal/.env.development.local",
+        "~/projects/adventure-journal/.env.production",
+        "~/projects/adventure-journal/supabase/seed/private"
       ]
     },
     "credentials": {
@@ -131,14 +134,51 @@
         {
           "name": "VERCEL_TOKEN",
           "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_ROLE_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_SECRET_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_INTERNAL_SECRET_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_ACCESS_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_DB_PASSWORD",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_S3_ACCESS_KEY_ID",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_S3_SECRET_ACCESS_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "SUPABASE_AUTH_GOOGLE_SECRET",
+          "mode": "deny"
+        },
+        {
+          "name": "OPENAI_API_KEY",
+          "mode": "deny"
+        },
+        {
+          "name": "SENTRY_AUTH_TOKEN",
+          "mode": "deny"
         }
       ]
     },
-    "excludedCommands": [
-      "docker *"
-    ]
+    "excludedCommands": ["docker *"]
   },
-  "feedbackDrafts": "off",
   "spellcheck": {
     "enabled": true
   },
@@ -146,12 +186,16 @@
     "claude-opus-5": {
       "effortLevel": "high"
     },
-    "claude-fable-5": {
-      "effortLevel": "xhigh"
-    },
     "claude-fable-5-1": {
       "effortLevel": "high"
     }
+  },
+  "feedbackSurveyRate": 0,
+  "feedbackDrafts": "off",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
   },
   "autoCompactWindow": 142000,
   "autoUpdatesChannel": "stable",
