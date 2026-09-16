@@ -49,7 +49,7 @@
       "Edit(~/.claude/settings*.json)",
       "Edit(**/.mcp.json)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "disableClaudeAiConnectors": true,
   "disableWorkflows": true,
@@ -61,20 +61,27 @@
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": false,
     "code-review@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": false,
     "mattpocock-skills@claude-plugins-official": true,
-    "github@claude-plugins-official": true
+    "github@claude-plugins-official": false
   },
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
     "network": {
-      "allowedDomains": ["registry.npmjs.org", "*.github.com", "github.com"]
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "*.github.com",
+        "github.com"
+      ]
     },
     "filesystem": {
-      "allowWrite": ["~/dotfiles", "~/omarchy-setup"],
+      "allowWrite": [
+        "~/dotfiles",
+        "~/omarchy-setup"
+      ],
       "denyRead": [
         "~/projects/adventure-journal/.env",
         "~/projects/adventure-journal/.env.development",
@@ -177,7 +184,9 @@
         }
       ]
     },
-    "excludedCommands": ["docker *"]
+    "excludedCommands": [
+      "docker *"
+    ]
   },
   "spellcheck": {
     "enabled": true
