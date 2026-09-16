@@ -53,10 +53,10 @@ o.bind(
 -- same { webapp, focus } form Omarchy's default used, so its behavior is
 -- unchanged -- only the key moved.
 --
--- Postman is a tarball unpacked in ~/postman, not a package, so there is no
--- `postman` on PATH to launch. The path is repeated in
--- ~/.local/share/applications/postman.desktop, which is what SUPER + SPACE
--- finds; both break the same way if the install moves.
+-- Postman is a tarball unpacked in ~/postman by hand (install-postman.sh in
+-- ~/omarchy-setup only checks for it), so there is no `postman` on PATH to
+-- launch. The path is repeated in the postman package's postman.desktop, which
+-- is what SUPER + SPACE finds; both break the same way if the install moves.
 hl.unbind("SUPER + SHIFT + P")
 hl.unbind("SUPER + SHIFT + ALT + P")
 o.bind("SUPER + SHIFT + ALT + P", "Google Photos", { webapp = "https://photos.google.com/", focus = true })

@@ -27,11 +27,11 @@ exists on a fresh machine needs its `$HOME` path added there.
 
 ## Three stow patterns, not one
 
-| Pattern                                              | Packages                                               |
-| ---------------------------------------------------- | ------------------------------------------------------ |
-| plain                                                | `bash`, `nvim`, `prettier`, `markdownlint`, `ghostty`  |
-| `--no-folding` — target dir holds files we don't own | `ssh`, `git`, `mise`, `herdr`, `claude`, `dygma-watch` |
-| `--no-folding --adopt`                               | `hypr`                                                 |
+| Pattern                                              | Packages                                                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------- |
+| plain                                                | `bash`, `nvim`, `prettier`, `markdownlint`, `ghostty`             |
+| `--no-folding` — target dir holds files we don't own | `ssh`, `git`, `mise`, `herdr`, `claude`, `dygma-watch`, `postman` |
+| `--no-folding --adopt`                               | `hypr`                                                            |
 
 Use the **same flags** locally as the installer uses. Locally the target dir
 usually already exists so stow won't fold either way; on a fresh machine it

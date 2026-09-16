@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Postman
+Comment=API platform
+Exec=/home/baz/postman/postman-linux-x64/Postman/Postman %U
+Icon=/home/baz/postman/postman-linux-x64/Postman/app/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Development;
+StartupNotify=true
+StartupWMClass=Postman
