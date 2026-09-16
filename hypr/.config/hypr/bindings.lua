@@ -49,6 +49,19 @@ o.bind(
 	o.launch_webapp_sole(apps.supabase_local.class, apps.supabase_local.url)
 )
 
+-- Postman takes the P mnemonic, so Google Photos moves aside. Rebound with the
+-- same { webapp, focus } form Omarchy's default used, so its behavior is
+-- unchanged -- only the key moved.
+--
+-- Postman is a tarball unpacked in ~/postman, not a package, so there is no
+-- `postman` on PATH to launch. The path is repeated in
+-- ~/.local/share/applications/postman.desktop, which is what SUPER + SPACE
+-- finds; both break the same way if the install moves.
+hl.unbind("SUPER + SHIFT + P")
+hl.unbind("SUPER + SHIFT + ALT + P")
+o.bind("SUPER + SHIFT + ALT + P", "Google Photos", { webapp = "https://photos.google.com/", focus = true })
+o.bind("SUPER + SHIFT + P", "Postman", { launch = "~/postman/postman-linux-x64/Postman/Postman" })
+
 hl.unbind("SUPER + M")
 o.bind("SUPER + M", "Monitor Config", "ghostty -e nvim ~/dotfiles/hypr/.config/hypr/monitors.lua")
 hl.unbind("SUPER + ALT + N")
