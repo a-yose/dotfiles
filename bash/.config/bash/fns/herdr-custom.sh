@@ -8,13 +8,10 @@ hdsc() {
     return 1
   }
   local current_dir="${PWD}"
-  local editor_pane diff_pane terminal_pane claude_pane
-  editor_pane="$HERDR_PANE_ID"
+  local left_pane middle_pane diff_pane
+  left_pane="$HERDR_PANE_ID"
   herdr tab rename "$HERDR_TAB_ID" "$(basename "$current_dir")" >/dev/null
-  terminal_pane=$(_herdr_split "$editor_pane" down 0.5 "$current_dir")
-  diff_pane=$(_herdr_split "$editor_pane" right 0.5 "$current_dir")
-  claude_pane=$(_herdr_split "$terminal_pane" right 0.5 "$current_dir")
-  herdr pane run "$editor_pane" "nvim" >/dev/null
+  middle_pane=$(_herdr_split "$left_pane" right 0.3333 "$current_dir")
+  diff_pane=$(_herdr_split "$middle_pane" right 0.5 "$current_dir")
   herdr pane run "$diff_pane" "hunk diff --watch" >/dev/null
-  herdr pane run "$claude_pane" "claude" >/dev/null
 }
