@@ -1,5 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "Bash(git status *)",
@@ -188,6 +193,8 @@
       "docker *"
     ]
   },
+  "feedbackSurveyRate": 0,
+  "feedbackDrafts": "off",
   "spellcheck": {
     "enabled": true
   },
@@ -199,17 +206,11 @@
       "effortLevel": "high"
     }
   },
-  "feedbackSurveyRate": 0,
-  "feedbackDrafts": "off",
-  "attribution": {
-    "commit": "",
-    "pr": "",
-    "sessionUrl": false
-  },
   "autoCompactWindow": 142000,
   "autoUpdatesChannel": "stable",
   "theme": "auto",
   "editorMode": "vim",
   "autoCompactEnabled": false,
-  "fileCheckpointingEnabled": true
+  "fileCheckpointingEnabled": true,
+  "model": "fable"
 }

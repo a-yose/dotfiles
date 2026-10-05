@@ -36,11 +36,11 @@ hl.on("hyprland.start", function()
 	start(apps.obsidian, o.launch("obsidian"))
 
 	-- ws 4 -- project workspace
-	start(apps.docker, "omarchy-launch-tui --app-id=" .. apps.docker.class .. " omarchy-launch-docker-tui")
-	start(apps.github, o.launch_webapp(apps.github.url))
-	start(apps.vercel, o.launch_webapp(apps.vercel.url))
+	-- start(apps.docker, "omarchy-launch-tui --app-id=" .. apps.docker.class .. " omarchy-launch-docker-tui")
+	-- start(apps.github, o.launch_webapp(apps.github.url))
+	-- start(apps.vercel, o.launch_webapp(apps.vercel.url))
 	-- start(apps.supabase, o.launch_webapp(apps.supabase.url))
-	start(apps.supabase_local, o.launch_webapp(apps.supabase_local.url))
+	-- start(apps.supabase_local, o.launch_webapp(apps.supabase_local.url))
 
 	-- ws 5 -- music. omarchy-launch-spotify handles the not-installed case, so
 	-- it is used instead of a plain `spotify`.
